@@ -1,0 +1,25 @@
+{
+  "name": "utypon",
+  "version": "0.0.1",
+  "description": "Command Line Tools For Atypon's UI Team",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "npm i -g ts-node"
+  },
+  "keywords": [
+    "CLI",
+    "Atypon",
+    "UI",
+    "Typscript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  },
+  "bin": {
+    "utypon": "./bin/utypon"
+  }
+}
