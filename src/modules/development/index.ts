@@ -9,9 +9,13 @@ class Development extends UtyponModule {
     async run(options: { [key: string]: any; }) {
         const configFile = FileSystem.resolveRelativeToWorkingDirectory("./figma-config.json");
         if(FileSystem.fileExist(configFile)) {
+            console.clear();
+            await GenericUtil.showWelcomeMessage();
+            const spinner = await GenericUtil.showLoading(' fetching design tokens')
             const config = JSON.parse(FileSystem.readFileSync(configFile)).designTokens.config;
             await this.linkFile(config['figma-link']);
             await this.syncDesignTokens();
+            spinner.destroy();
         }
         if(await this.checkDesignTokenChange()) {
             const continueToDev = (await GenericUtil.askQuestion("Looks Like A Change Has been Occurred On The Design Token, Do Wish To Continue(Y/N)?")) === 'Y';
@@ -19,6 +23,7 @@ class Development extends UtyponModule {
                 this.discardDesignTokenUpdate();
             }
         }
+        GenericUtil.terminate();
         // this.startBundler();
 
     }

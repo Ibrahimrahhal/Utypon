@@ -1,6 +1,7 @@
 import { exec, spawn } from "child_process";
 import * as readline from "readline";
-
+const term = require( 'terminal-kit' ).terminal;
+const figlet = require('figlet');
 
 export default class GenericUtil {
     public static withOutLogging(callback: Function) {
@@ -50,5 +51,32 @@ export default class GenericUtil {
             rl.close();
         });
        })
+    }
+
+    public static async showLoading(message: string) {
+        var spinner = await term.spinner( 'dotSpinner' ) ;
+        term( message ) ;
+        return spinner;
+    }
+
+    public static terminate() {
+        term.processExit();
+    }
+
+    public static async showWelcomeMessage(): Promise<void>{
+        return new Promise((resolve, reject) => {
+            figlet.text('Utypon', {
+                font: 'Big Money-ne',
+                horizontalLayout: 'default',
+                verticalLayout: 'default',
+                width: 80,
+                whitespaceBreak: true
+            }, function(err, data) {
+                if(!err) {
+                    term.green(`${data}\n\n\n`);
+                }
+                resolve();
+            })
+        })
     }
 }
