@@ -1,8 +1,13 @@
-import sync from "./sync";
-import UtyponModule from "../../core/UtyponModule";
+import sync from './sync';
+import UtyponModule from '../../core/UtyponModule';
 
-class Figma extends UtyponModule{
-    run() {}
+class Figma extends UtyponModule {
+  _command = 'figma';
+  _desc = `SG - Figma Integration Commands Namespace`
+  run() {}
 }
 
-export default (new Figma).asModule("figma", [], [sync]);
+const figma = new Figma();
+figma.registerSubModules([sync]);
+
+export default figma;
