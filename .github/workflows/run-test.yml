@@ -23,6 +23,5 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - run: export skip_protypone_install=true
-      - run: npm i
+      - run: export skip_protypone_install=true && npm i
       - run: npm start
