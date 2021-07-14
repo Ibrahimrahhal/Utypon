@@ -8,7 +8,8 @@
     "postinstall": "npm i -g ts-node typescript && husky install",
     "lint": "eslint */**/*.ts",
     "lint-staged": "lint-staged",
-    "format": "eslint */**/*.ts --fix"
+    "format": "eslint */**/*.ts --fix",
+    "start": "ts-node ./src/bin/utypon"
   },
   "keywords": [
     "CLI",
@@ -39,6 +40,7 @@
     "@typescript-eslint/parser": "^4.28.3",
     "eslint": "^7.30.0",
     "eslint-config-google": "^0.14.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "lint-staged": "^11.0.1"
   },
   "lint-staged": {
