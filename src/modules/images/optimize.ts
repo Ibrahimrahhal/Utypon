@@ -13,7 +13,7 @@ class Optimize extends UtyponModule {
   private imagesPathOut = 'images/';
 
   async run() {
-    const spinner = await GenericUtil.showLoading(' Optimizing Images'); const spinner = await GenericUtil.showLoading(' Optimizing Images'); const spinner = await GenericUtil.showLoading(' Optimizing Images'); const spinner = await GenericUtil.showLoading(' Optimizing Images'); const spinner = await GenericUtil.showLoading(' Optimizing Images'); const spinner = await GenericUtil.showLoading(' Optimizing Images'); const spinner = await GenericUtil.showLoading(' Optimizing Images'); const spinner = await GenericUtil.showLoading(' Optimizing Images'); const spinner = await GenericUtil.showLoading(' Optimizing Images'); const spinner = await GenericUtil.showLoading(' Optimizing Images'); const spinner = await GenericUtil.showLoading(' Optimizing Images'); const spinner = await GenericUtil.showLoading(' Optimizing Images'); const spinner = await GenericUtil.showLoading(' Optimizing Images'); const spinner = await GenericUtil.showLoading(' Optimizing Images'); const spinner = await GenericUtil.showLoading(' Optimizing Images'); const spinner = await GenericUtil.showLoading(' Optimizing Images');
+    const spinner = await GenericUtil.showLoading(' Optimizing Images');
     await this.optimizeImages(this.imagesPathIn, this.imagesPathOut);
     spinner.destroy();
     console.log('Images Optimized!');
