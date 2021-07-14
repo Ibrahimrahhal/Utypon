@@ -1,7 +1,5 @@
 
 name: Check Linting
-description: Runing npm run lint to verify that everything matches the standard
-
 on:
   push:
     branches: [main]
