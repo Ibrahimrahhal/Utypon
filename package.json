@@ -44,4 +44,5 @@
   "lint-staged": {
     "*.ts": "eslint */**/*.ts"
   }
+  
 }
