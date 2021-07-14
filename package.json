@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "npm i -g ts-node typescript && husky install",
-    "lint": "eslint */**/*.ts",
+    "postinstall": "bash ./.npm/postinstall",
+    "lint": "eslint **/*.ts",
     "lint-staged": "lint-staged",
-    "format": "eslint */**/*.ts --fix",
+    "format": "eslint **/*.ts --fix",
     "start": "ts-node ./src/bin/utypon"
   },
   "keywords": [
@@ -27,13 +27,17 @@
     "@types/node": "^15.0.2",
     "@types/yargs": "^16.0.1",
     "figlet": "^1.5.0",
+    "husky": "^7.0.1",
+    "imagemin": "^ 7.0.1",
+    "imagemin-jpeg-recompress": "^7.0.0",
+    "imagemin-jpegtran": "^7.0.0",
+    "imagemin-pngquant": "^9.0.2",
     "lodash": "^4.17.21",
     "scssfmt": "^1.0.7",
     "terminal-kit": "^2.1.2",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.4",
-    "yargs": "^17.0.1",
-    "husky": "^7.0.1"
+    "yargs": "^17.0.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.28.3",

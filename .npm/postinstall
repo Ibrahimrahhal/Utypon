@@ -1,0 +1,22 @@
+#!/bin/bash
+npm_reg_confluence="https://confluence.atypon.com/display/PROT/How+to+access+Atypon%27s+private+packages"
+
+if [ -z "$skip_protypone_install" ]; then
+    echo Installing protypon dep...
+    npm install -g @atypon/protypon-cli
+    if [ "${?}" = "1" ]; then
+        npm install -g open-cli
+        clear;
+        printf "Error accessing atypon's private npm registry \nplease follow => \n$npm_reg_confluence \n"
+        open-cli "$npm_reg_confluence"
+        exit 1
+    fi
+fi
+
+echo Installing typescript globally...
+npm i -g ts-node typescript
+husky install
+if [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
+    chmod ug+x .husky/*
+    chmod ug+x .git/hooks/*
+fi
