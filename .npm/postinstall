@@ -16,7 +16,6 @@ fi
 echo Installing typescript globally...
 npm i -g ts-node typescript
 husky install
-
-if [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-    chmod -x ./.husky/pre-commit
+if [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
+    sudo chmod -x ./.husky/pre-commit
 fi
