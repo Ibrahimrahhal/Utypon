@@ -1,5 +1,4 @@
-import UtyponModule from '../../core/UtyponModule';
-
+import UtyponModule, {UtyponFactory} from '../../core/UtyponModule';
 class Default extends UtyponModule {
   _command = '$0';
   _desc = ``
@@ -8,4 +7,4 @@ class Default extends UtyponModule {
   }
 }
 
-export default new Default();
+export default UtyponFactory.create<Default>(Default);

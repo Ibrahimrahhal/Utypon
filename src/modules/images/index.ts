@@ -1,4 +1,4 @@
-import UtyponModule from '../../core/UtyponModule';
+import UtyponModule, {UtyponFactory} from '../../core/UtyponModule';
 import Optimize from './optimize';
 
 class Image extends UtyponModule {
@@ -7,7 +7,7 @@ class Image extends UtyponModule {
   run() {}
 }
 
-const image = new Image();
+const image = UtyponFactory.create<Image>(Image);
 image.registerSubModules([Optimize]);
 
 export default image;

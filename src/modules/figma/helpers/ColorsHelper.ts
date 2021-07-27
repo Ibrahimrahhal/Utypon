@@ -1,9 +1,12 @@
-import SassUtil from '../../../util/SassRelated';
+import {Inject} from 'typedi';
+import SassUtil from '../../../util/Scss';
 
-export default class ColorsHelper {
-    private static rootBrandingKey = 'publisher';
+class ColorsHelper {
+    private rootBrandingKey = 'publisher';
+    @Inject()
+    protected sassUtil: SassUtil;
 
-    static brandingHelper(brandings: any): string {
+    brandingHelper(brandings: any): string {
       let sassFile = ``;
       const utilMixin = `
             @mixin applyTokensBranding($selector, $colorMap) {
@@ -16,9 +19,9 @@ export default class ColorsHelper {
         `;
       sassFile += utilMixin;
       sassFile += `$brandingTokens: ${Object.entries(brandings).reduce((prev, [brandingName, brandingObject]) => {
-        const colorMap = SassUtil.convertObjectToSassMap(brandingObject);
+        const colorMap = this.sassUtil.convertObjectToSassMap(brandingObject);
         const selector = (brandingName === this.rootBrandingKey) ? '":root"' : `".${brandingName}"`;
-        return prev.concat([SassUtil.convertObjectToSassMap({colorMap, selector})]);
+        return prev.concat([this.sassUtil.convertObjectToSassMap({colorMap, selector})]);
       }, []).join(',')};`;
 
       sassFile += `
@@ -26,13 +29,15 @@ export default class ColorsHelper {
                 @include applyTokensBranding(map-get($brandingToken, 'selector'), map-get($brandingToken, 'colorMap'));
             }
         `;
-      return SassUtil.format(sassFile);
+      return this.sassUtil.format(sassFile);
     }
 
-    static colorGroupsHelper(colorGroups: any[], defaultFlag = false): string {
+    colorGroupsHelper(colorGroups: any[], defaultFlag = false): string {
       const groups = Object.entries(colorGroups).map(([groupName, value]) => {
-        return `$figma-${groupName}: ${SassUtil.convertObjectToSassMap(value)} ${defaultFlag && '!default'}`;
+        return `$figma-${groupName}: ${this.sassUtil.convertObjectToSassMap(value)} ${defaultFlag && '!default'}`;
       }).join(';');
-      return SassUtil.format(groups);
+      return this.sassUtil.format(groups);
     }
 }
+
+export default ColorsHelper;

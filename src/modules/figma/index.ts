@@ -1,5 +1,6 @@
+
 import sync from './sync';
-import UtyponModule from '../../core/UtyponModule';
+import UtyponModule, {UtyponFactory} from '../../core/UtyponModule';
 
 class Figma extends UtyponModule {
   _command = 'figma';
@@ -7,7 +8,7 @@ class Figma extends UtyponModule {
   run() {}
 }
 
-const figma = new Figma();
+const figma = UtyponFactory.create<Figma>(Figma);
 figma.registerSubModules([sync]);
 
 export default figma;

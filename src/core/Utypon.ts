@@ -1,7 +1,8 @@
-import Modules from '../modules';
+import 'reflect-metadata';
 import * as yargs from 'yargs';
 import {Argv} from 'yargs';
 import UtyponModule from './UtyponModule';
+import Modules from '../modules';
 
 type commandHandler = (argv: Argv) => (Promise<void> | Argv['argv']);
 export default class Utypon {

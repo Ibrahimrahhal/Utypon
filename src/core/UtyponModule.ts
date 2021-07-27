@@ -1,15 +1,20 @@
-import GenericUtil from '../util/Generic';
-export default abstract class UtyponModule {
+import Generic from '../util/Generic';
+import {Service, Inject, Container} from 'typedi';
+
+abstract class UtyponModule {
     abstract _command: string;
     abstract _desc: string;
     public _subModules:UtyponModule[];
+
+    @Inject()
+    protected genericUtils: Generic;
 
     abstract run(options: { [key: string]: any }): void
 
     async beforeRun(options: { [key: string]: any }): Promise<void> {
       console.clear();
       console.log('\n\n'); // @todo:- handle formating in a better way
-      await GenericUtil.showWelcomeMessage();
+      await this.genericUtils.showWelcomeMessage();
       console.log('\n\n');
     }
 
@@ -28,4 +33,13 @@ export default abstract class UtyponModule {
     get subModules(): UtyponModule[] {
       return this._subModules;
     }
+}
+
+export default UtyponModule;
+
+export class UtyponFactory {
+  static create<T>(moduleClass): T {
+    Service()(moduleClass);
+    return Container.get(moduleClass) as T;
+  }
 }
