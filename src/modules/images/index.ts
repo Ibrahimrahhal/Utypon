@@ -4,7 +4,7 @@ import Optimize from './optimize';
 class Image extends UtyponModule {
   _command = 'image';
   _desc = `Images Related Commands Namespace`
-  run() {}
+  async run() {}
 }
 
 const image = UtyponFactory.create(Image);

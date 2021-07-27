@@ -1,4 +1,4 @@
-import Generic from '../util/Generic';
+import Console from '../util/Console';
 import {Service, Inject, Container} from 'typedi';
 
 abstract class UtyponModule {
@@ -7,15 +7,19 @@ abstract class UtyponModule {
     public _subModules:UtyponModule[];
 
     @Inject()
-    protected genericUtils: Generic;
+    protected console: Console;
 
-    abstract run(options: { [key: string]: any }): void
+    abstract run(options: { [key: string]: any }): Promise<void>
 
     async beforeRun(options: { [key: string]: any }): Promise<void> {
-      console.clear();
-      console.log('\n\n'); // @todo:- handle formating in a better way
-      await this.genericUtils.showWelcomeMessage();
-      console.log('\n\n');
+      this.console.clear();
+      this.console.print('\n\n');
+      await this.console.welcome();
+      this.console.print('\n\n');
+    }
+
+    async afterRun() {
+      this.console.detach();
     }
 
     registerSubModules(subModules: UtyponModule[]) {

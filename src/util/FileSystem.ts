@@ -23,6 +23,12 @@ class FileSystem {
   public fileExist(path: string): boolean {
     return fs.existsSync(path);
   }
+
+  public createWriteStream(fileName: string, pathToSave: string): fs.WriteStream {
+    return fs.createWriteStream(
+        path.resolve(this.resolveRelativeToWorkingDirectory(pathToSave), fileName),
+    );
+  }
 }
 
 export default FileSystem;

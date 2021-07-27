@@ -1,83 +1,46 @@
 import {exec, spawn} from 'child_process';
-import * as readline from 'readline';
-import {Service} from 'typedi';
+import {Service, Inject} from 'typedi';
+import * as Http from 'http';
+import FileSystem from './FileSystem';
 
-const term = require( 'terminal-kit' ).terminal;
-const figlet = require('figlet');
 @Service()
 class GenericUtil {
-  public withOutLogging(callback: Function) {
-    const log = global.console.log;
-    global.console.log = () => 0;
-    callback();
-    global.console.log = log;
-  }
+  @Inject()
+  private fileSystem: FileSystem;
 
   public executeCommand(command:string, attach:boolean = false): Promise<string> {
-    return new Promise((resolve, reject) => {
-      exec(command, (error, stdout, stderr) => {
-        if (error) {
-          if (attach) {
-            console.error(error.message);
+    if (!attach) {
+      return new Promise((resolve, reject) => {
+        exec(command, (error, stdout, stderr) => {
+          if (error) {
+            if (attach) {
+              console.error(error.message);
+            }
+            reject(error.message);
+            return;
           }
-          reject(error.message);
-          return;
-        }
-        if (attach) {
-          console.log(stderr);
-          console.log(stdout);
-        }
-        resolve(stdout);
+          if (attach) {
+            console.log(stderr);
+            console.log(stdout);
+          }
+          resolve(stdout);
+        });
       });
-    });
+    } else {
+      spawn(command);
+      return Promise.resolve('');
+    }
   }
 
-  public executeAndAttachCommand(command: string) {
-    const child = spawn(command);
-    child.stdout.on('data', function(buffer) {
-      console.log(buffer.toString());
-    });
-    child.stderr.on('data', function(buffer) {
-      console.log(buffer.toString());
-    });
-  }
 
-  public askQuestion(question: string): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout,
-      });
-      rl.question(question, function(answer) {
-        resolve(answer);
-        rl.close();
-      });
-    });
-  }
-
-  public async showLoading(message: string) {
-    const spinner = await term.spinner( 'dotSpinner' );
-    term( message );
-    return spinner;
-  }
-
-  public terminate() {
-    term.processExit();
-  }
-
-  public async showWelcomeMessage(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      figlet.text('Utypon', {
-        font: 'Big Money-ne',
-        horizontalLayout: 'default',
-        verticalLayout: 'default',
-        width: 80,
-        whitespaceBreak: true,
-      }, function(err, data) {
-        if (!err) {
-          term.green(`${data}\n\n\n`);
-        }
-        resolve();
+  async downloadFile(name: string, path: string, url: string): Promise<void> {
+    const file = this.fileSystem.createWriteStream(name, path);
+    await new Promise<void>((resolve, reject) => {
+      Http.get(url, function(response) {
+        response.pipe(file);
+        response.on('end', () => {
+          resolve();
+        });
       });
     });
   }
