@@ -2,27 +2,30 @@ import * as imagemin from 'imagemin';
 import * as imageminJpegtran from 'imagemin-jpegtran';
 import * as imageminRecompress from 'imagemin-jpeg-recompress';
 import imageminPngquant from 'imagemin-pngquant';
-import UtyponModule from '../../core/UtyponModule';
-import FileSystem from '../../util/FileSystem';
-import GenericUtil from '../../util/Generic';
+import {Service, Inject} from 'typedi';
 
+import UtyponModule, {UtyponFactory} from '../../core/UtyponModule';
+import FileSystem from '../../util/FileSystem';
+
+@Service()
 class Optimize extends UtyponModule {
   _command = 'optimize';
   _desc = `Optimize Product Images (uses product/image directory)`;
   private imagesPathIn = 'images/**/*.{jpg,JPG,jpeg,JPEG,png}';
   private imagesPathOut = 'images/';
-
+  @Inject()
+  protected fileSystem: FileSystem;
   async run() {
-    const spinner = await GenericUtil.showLoading(' Optimizing Images');
+    const spinner = await this.genericUtils.showLoading(' Optimizing Images');
     await this.optimizeImages(this.imagesPathIn, this.imagesPathOut);
     spinner.destroy();
     console.log('Images Optimized!');
-    GenericUtil.terminate();
+    this.genericUtils.terminate();
   }
 
   optimizeImages(pathIn, pathOut): Promise<void> {
-    const fullPathIn = FileSystem.resolveRelativeToWorkingDirectory(pathIn);
-    const fullPathOut = FileSystem.resolveRelativeToWorkingDirectory(pathOut);
+    const fullPathIn = this.fileSystem.resolveRelativeToWorkingDirectory(pathIn);
+    const fullPathOut = this.fileSystem.resolveRelativeToWorkingDirectory(pathOut);
     const compress = imagemin([fullPathIn], {
       destination: fullPathOut,
       plugins: [
@@ -37,4 +40,4 @@ class Optimize extends UtyponModule {
   }
 }
 
-export default new Optimize();
+export default UtyponFactory.create<Optimize>(Optimize);

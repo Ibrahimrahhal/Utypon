@@ -1,12 +1,16 @@
 import FileSystem from './FileSystem';
+import {Service} from 'typedi';
 
+@Service()
 export default class StyleguideUtil {
-  private static getProjectPackageJson() {
-    const packageJson = FileSystem.readFileSync(FileSystem.resolveRelativeToWorkingDirectory('package.json'));
+  constructor(private fs: FileSystem) { }
+
+  getProjectPackageJson() {
+    const packageJson = this.fs.readFileSync(this.fs.resolveRelativeToWorkingDirectory('package.json'));
     return JSON.parse(packageJson);
   }
 
-  public static get workingLevel(): 'core' | 'theme' | 'product' {
+  get workingLevel(): 'core' | 'theme' | 'product' {
     const name = this.getProjectPackageJson().name;
     if (name.includes('core')) {
       return 'core';
