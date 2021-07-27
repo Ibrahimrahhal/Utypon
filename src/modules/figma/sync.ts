@@ -8,4 +8,4 @@ class FigmaSync extends UtyponModule {
   }
 }
 
-export default UtyponFactory.create<FigmaSync>(FigmaSync);
+export default UtyponFactory.create(FigmaSync);

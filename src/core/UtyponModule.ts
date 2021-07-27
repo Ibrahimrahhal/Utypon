@@ -38,8 +38,8 @@ abstract class UtyponModule {
 export default UtyponModule;
 
 export class UtyponFactory {
-  static create<T>(moduleClass): T {
+  static create(moduleClass): UtyponModule {
     Service()(moduleClass);
-    return Container.get(moduleClass) as T;
+    return Container.get(moduleClass) as UtyponModule;
   }
 }

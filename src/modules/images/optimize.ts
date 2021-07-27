@@ -39,4 +39,4 @@ class Optimize extends UtyponModule {
   }
 }
 
-export default UtyponFactory.create<Optimize>(Optimize);
+export default UtyponFactory.create(Optimize);

@@ -51,4 +51,4 @@ class Development extends UtyponModule {
     }
 }
 
-export default UtyponFactory.create<Development>(Development);
+export default UtyponFactory.create(Development);

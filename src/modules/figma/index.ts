@@ -8,7 +8,7 @@ class Figma extends UtyponModule {
   run() {}
 }
 
-const figma = UtyponFactory.create<Figma>(Figma);
+const figma = UtyponFactory.create(Figma);
 figma.registerSubModules([sync]);
 
 export default figma;

@@ -7,7 +7,7 @@ class Image extends UtyponModule {
   run() {}
 }
 
-const image = UtyponFactory.create<Image>(Image);
+const image = UtyponFactory.create(Image);
 image.registerSubModules([Optimize]);
 
 export default image;

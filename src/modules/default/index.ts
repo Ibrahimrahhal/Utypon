@@ -7,4 +7,4 @@ class Default extends UtyponModule {
   }
 }
 
-export default UtyponFactory.create<Default>(Default);
+export default UtyponFactory.create(Default);
