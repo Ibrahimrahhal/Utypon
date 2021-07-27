@@ -1,6 +1,7 @@
 import UtyponModule, {UtyponFactory} from '../../core/UtyponModule';
 import FileSystem from '../../util/FileSystem';
 import {Inject} from 'typedi';
+import GenericUtil from '../../util/Generic';
 
 class Development extends UtyponModule {
     _command = 'dev';
@@ -10,22 +11,24 @@ class Development extends UtyponModule {
     @Inject()
     protected fileSystem: FileSystem;
 
+    @Inject()
+    protected genericUtils: GenericUtil;
+
     async run(options: { [key: string]: any; }) {
       const configFile = this.fileSystem.resolveRelativeToWorkingDirectory('./figma-config.json');
       if (this.fileSystem.fileExist(configFile)) {
-        const spinner = await this.genericUtils.showLoading(' fetching design tokens');
+        const spinner = await this.console.loading(' fetching design tokens');
         const config = JSON.parse(this.fileSystem.readFileSync(configFile)).designTokens.config;
         await this.linkFile(config['figma-link']);
         await this.syncDesignTokens();
         spinner.destroy();
       }
       if (await this.checkDesignTokenChange()) {
-        const continueToDev = (await this.genericUtils.askQuestion('Looks Like A Change Has been Occurred On The Design Token, Do Wish To Continue(Y/N)?')) === 'Y';
+        const continueToDev = (await this.console.question('Looks Like A Change Has been Occurred On The Design Token, Do Wish To Continue(Y/N)?')) === 'Y';
         if (!continueToDev) {
           this.discardDesignTokenUpdate();
         }
       }
-      this.genericUtils.terminate();
       // this.startBundler();
     }
 
@@ -51,4 +54,4 @@ class Development extends UtyponModule {
     }
 }
 
-export default UtyponFactory.create<Development>(Development);
+export default UtyponFactory.create(Development);

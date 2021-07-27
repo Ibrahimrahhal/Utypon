@@ -1,12 +1,13 @@
 import FileSystem from './FileSystem';
-import {Service} from 'typedi';
+import {Service, Inject} from 'typedi';
 
 @Service()
 export default class StyleguideUtil {
-  constructor(private fs: FileSystem) { }
+  @Inject()
+  private fileSystem: FileSystem;
 
   getProjectPackageJson() {
-    const packageJson = this.fs.readFileSync(this.fs.resolveRelativeToWorkingDirectory('package.json'));
+    const packageJson = this.fileSystem.readFileSync(this.fileSystem.resolveRelativeToWorkingDirectory('package.json'));
     return JSON.parse(packageJson);
   }
 

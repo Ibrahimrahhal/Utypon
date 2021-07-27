@@ -6,15 +6,15 @@ import Modules from '../modules';
 
 type commandHandler = (argv: Argv) => (Promise<void> | Argv['argv']);
 export default class Utypon {
-    private static instance: Utypon;
+    private static _instance: Utypon;
 
     private constructor() { }
 
-    static getInstance(): Utypon {
-      if (!Utypon.instance) {
-        Utypon.instance = new Utypon();
+    static get instance(): Utypon {
+      if (!Utypon._instance) {
+        Utypon._instance = new Utypon();
       }
-      return Utypon.instance;
+      return Utypon._instance;
     }
 
     prepareModules(yargs: Argv<{}>, modules: UtyponModule[]): Argv['argv'] {
@@ -43,7 +43,8 @@ export default class Utypon {
 
       return async ({argv}) => {
         await module.beforeRun(argv);
-        module.run(argv);
+        await module.run(argv);
+        await module.afterRun();
       };
     }
 }

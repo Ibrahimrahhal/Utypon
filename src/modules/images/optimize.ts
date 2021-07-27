@@ -14,12 +14,12 @@ class Optimize extends UtyponModule {
   private imagesPathOut = 'images/';
   @Inject()
   protected fileSystem: FileSystem;
+
   async run() {
-    const spinner = await this.genericUtils.showLoading(' Optimizing Images');
+    const spinner = await this.console.loading(' Optimizing Images');
     await this.optimizeImages(this.imagesPathIn, this.imagesPathOut);
     spinner.destroy();
-    console.log('Images Optimized!');
-    this.genericUtils.terminate();
+    this.console.print('Images Optimized!');
   }
 
   optimizeImages(pathIn, pathOut): Promise<void> {
@@ -39,4 +39,4 @@ class Optimize extends UtyponModule {
   }
 }
 
-export default UtyponFactory.create<Optimize>(Optimize);
+export default UtyponFactory.create(Optimize);
