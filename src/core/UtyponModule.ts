@@ -1,7 +1,6 @@
 import Generic from '../util/Generic';
 import {Service, Inject, Container} from 'typedi';
 
-Service();
 abstract class UtyponModule {
     abstract _command: string;
     abstract _desc: string;
@@ -40,6 +39,7 @@ export default UtyponModule;
 
 export class UtyponFactory {
   static create<T>(moduleClass): T {
+    Service()(moduleClass);
     return Container.get(moduleClass) as T;
   }
 }

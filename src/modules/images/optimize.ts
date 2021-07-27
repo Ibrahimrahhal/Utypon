@@ -2,12 +2,11 @@ import * as imagemin from 'imagemin';
 import * as imageminJpegtran from 'imagemin-jpegtran';
 import * as imageminRecompress from 'imagemin-jpeg-recompress';
 import imageminPngquant from 'imagemin-pngquant';
-import {Service, Inject} from 'typedi';
+import {Inject} from 'typedi';
 
 import UtyponModule, {UtyponFactory} from '../../core/UtyponModule';
 import FileSystem from '../../util/FileSystem';
 
-@Service()
 class Optimize extends UtyponModule {
   _command = 'optimize';
   _desc = `Optimize Product Images (uses product/image directory)`;

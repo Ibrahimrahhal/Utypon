@@ -1,7 +1,6 @@
-import {Service, Inject} from 'typedi';
+import {Inject} from 'typedi';
 import SassUtil from '../../../util/Scss';
 
-@Service()
 class ColorsHelper {
     private rootBrandingKey = 'publisher';
     @Inject()

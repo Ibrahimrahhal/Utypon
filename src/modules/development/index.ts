@@ -1,8 +1,7 @@
 import UtyponModule, {UtyponFactory} from '../../core/UtyponModule';
 import FileSystem from '../../util/FileSystem';
-import {Service, Inject} from 'typedi';
+import {Inject} from 'typedi';
 
-@Service()
 class Development extends UtyponModule {
     _command = 'dev';
     _desc = `Run Atypon Product Bundler In Development Mode`

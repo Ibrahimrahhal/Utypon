@@ -1,8 +1,6 @@
-import {Service} from 'typedi';
 import UtyponModule, {UtyponFactory} from '../../core/UtyponModule';
 import Optimize from './optimize';
 
-@Service()
 class Image extends UtyponModule {
   _command = 'image';
   _desc = `Images Related Commands Namespace`
